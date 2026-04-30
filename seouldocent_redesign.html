@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울도슨트협회 — Seoul Docent Association</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Noto+Serif+KR:wght@300;400;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --ink:      #1a1814;
+    --ink-60:   rgba(26,24,20,0.6);
+    --ink-20:   rgba(26,24,20,0.12);
+    --cream:    #f5f0e8;
+    --cream-d:  #ede7d9;
+    --gold:     #b89a5e;
+    --gold-l:   #d4b97a;
+    --white:    #faf8f4;
+    --serif-ko: 'Noto Serif KR', serif;
+    --serif-en: 'Cormorant Garamond', serif;
+    --mono:     'DM Mono', monospace;
+    --radius:   2px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--white);
+    color: var(--ink);
+    font-family: var(--serif-ko);
+    font-weight: 300;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed; top: 0; left: 0;
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+    mix-blend-mode: multiply;
+  }
+  .cursor.expand { width: 40px; height: 40px; background: rgba(184,154,94,0.2); }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: rgba(250,248,244,0.88);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--ink-20);
+  }
+
+  .nav-logo {
+    display: flex; flex-direction: column; gap: 1px;
+    text-decoration: none; color: var(--ink);
+  }
+  .nav-logo .ko { font-size: 13px; font-weight: 600; letter-spacing: 0.08em; }
+  .nav-logo .en {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: var(--gold); text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex; gap: 36px; list-style: none;
+  }
+  .nav-links a {
+    font-size: 13px; letter-spacing: 0.06em; color: var(--ink-60);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--ink); }
+
+  .nav-actions { display: flex; gap: 12px; align-items: center; }
+
+  .btn-outline {
+    font-family: var(--serif-ko); font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em;
+    padding: 8px 20px;
+    border: 1px solid var(--ink-20);
+    background: transparent;
+    color: var(--ink-60);
+    cursor: none; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-outline:hover { border-color: var(--ink); color: var(--ink); }
+
+  .btn-fill {
+    font-family: var(--serif-ko); font-size: 12px; font-weight: 600;
+    letter-spacing: 0.1em;
+    padding: 8px 24px;
+    border: 1px solid var(--gold);
+    background: var(--gold);
+    color: var(--white);
+    cursor: none; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn-fill:hover { background: #a08850; border-color: #a08850; }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding-top: 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 80px 60px 80px 80px;
+    position: relative; z-index: 2;
+  }
+
+  .hero-label {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.3em;
+    color: var(--gold); text-transform: uppercase; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .hero-label::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: var(--serif-en);
+    font-size: clamp(52px, 6vw, 88px);
+    font-weight: 300; line-height: 1.0;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+    opacity: 0; animation: fadeUp 1s 0.2s forwards;
+  }
+  .hero-title em { font-style: italic; color: var(--gold); }
+
+  .hero-subtitle-ko {
+    font-size: 18px; font-weight: 400; letter-spacing: 0.12em;
+    color: var(--ink-60); margin-bottom: 40px;
+    opacity: 0; animation: fadeUp 1s 0.4s forwards;
+  }
+
+  .hero-desc {
+    font-size: 15px; line-height: 2.0; color: var(--ink-60);
+    max-width: 380px; margin-bottom: 56px;
+    border-left: 1px solid var(--gold);
+    padding-left: 20px;
+    opacity: 0; animation: fadeUp 1s 0.6s forwards;
+  }
+
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 1s 0.8s forwards;
+  }
+
+  .btn-primary {
+    font-family: var(--serif-ko); font-size: 13px; font-weight: 600;
+    letter-spacing: 0.12em;
+    padding: 14px 36px;
+    background: var(--ink);
+    color: var(--white);
+    border: 1px solid var(--ink);
+    cursor: none; text-decoration: none;
+    transition: all 0.25s;
+    display: inline-flex; align-items: center; gap: 10px;
+  }
+  .btn-primary::after { content: '→'; font-family: var(--serif-en); }
+  .btn-primary:hover { background: var(--gold); border-color: var(--gold); }
+
+  .btn-secondary {
+    font-family: var(--serif-ko); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.1em;
+    padding: 14px 36px;
+    background: transparent;
+    color: var(--ink);
+    border: 1px solid var(--ink-20);
+    cursor: none; text-decoration: none;
+    transition: all 0.25s;
+  }
+  .btn-secondary:hover { border-color: var(--ink); }
+
+  .hero-right {
+    position: relative; overflow: hidden;
+  }
+  .hero-image-wrap {
+    position: absolute; inset: 0;
+    background: var(--cream);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* Artistic placeholder — museum-like geometry */
+  .hero-art {
+    width: 100%; height: 100%;
+    position: relative;
+    background: linear-gradient(135deg, #e8e0d0 0%, #d4c9b0 50%, #c5b898 100%);
+    overflow: hidden;
+  }
+  .hero-art::before {
+    content: '';
+    position: absolute; top: 10%; left: 10%;
+    width: 80%; height: 80%;
+    border: 1px solid rgba(184,154,94,0.4);
+  }
+  .hero-art::after {
+    content: '';
+    position: absolute; top: 20%; left: 20%;
+    width: 60%; height: 60%;
+    border: 1px solid rgba(184,154,94,0.25);
+  }
+  .hero-art-inner {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px;
+  }
+  .hero-art-circle {
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: rgba(184,154,94,0.18);
+    border: 1px solid rgba(184,154,94,0.5);
+  }
+  .hero-art-label {
+    font-family: var(--serif-en); font-style: italic;
+    font-size: 13px; color: rgba(184,154,94,0.8);
+    letter-spacing: 0.15em;
+  }
+
+  /* Floating year tag */
+  .hero-year {
+    position: absolute; bottom: 40px; right: 40px;
+    font-family: var(--mono); font-size: 10px;
+    color: rgba(184,154,94,0.6); letter-spacing: 0.2em;
+    writing-mode: vertical-rl; text-orientation: mixed;
+  }
+
+  /* Stats strip */
+  .hero-stats {
+    position: absolute; bottom: 0; left: 0;
+    width: 50%;
+    display: flex;
+    border-top: 1px solid var(--ink-20);
+  }
+  .stat {
+    flex: 1; padding: 20px 28px;
+    border-right: 1px solid var(--ink-20);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-num {
+    font-family: var(--serif-en); font-size: 28px; font-weight: 300;
+    color: var(--gold); display: block; margin-bottom: 2px;
+  }
+  .stat-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: var(--ink-60); text-transform: uppercase;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── SECTION DIVIDER ─── */
+  .section-rule {
+    height: 1px; background: var(--ink-20);
+    margin: 0 48px;
+  }
+
+  /* ─── ABOUT STRIP ─── */
+  .about-strip {
+    display: grid; grid-template-columns: 1fr 2fr 1fr;
+    gap: 0;
+    border-bottom: 1px solid var(--ink-20);
+  }
+  .about-cell {
+    padding: 56px 48px;
+    border-right: 1px solid var(--ink-20);
+  }
+  .about-cell:last-child { border-right: none; }
+  .cell-tag {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .cell-heading {
+    font-family: var(--serif-en); font-size: 32px; font-weight: 300;
+    font-style: italic; line-height: 1.2; margin-bottom: 16px;
+  }
+  .cell-body {
+    font-size: 14px; line-height: 2.0; color: var(--ink-60);
+  }
+  .cell-mission {
+    font-family: var(--serif-ko); font-size: 22px; font-weight: 400;
+    line-height: 1.7; letter-spacing: 0.04em;
+  }
+
+  /* ─── PROGRAMS ─── */
+  .programs {
+    padding: 96px 48px;
+  }
+  .section-header {
+    display: flex; justify-content: space-between; align-items: flex-end;
+    margin-bottom: 56px;
+  }
+  .section-title-wrap {}
+  .section-en {
+    font-family: var(--serif-en); font-size: 48px; font-weight: 300;
+    font-style: italic; line-height: 1.0; color: var(--ink);
+  }
+  .section-ko {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.25em;
+    color: var(--gold); text-transform: uppercase; margin-top: 6px;
+  }
+  .section-link {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-60); text-decoration: none; text-transform: uppercase;
+    display: flex; align-items: center; gap: 8px;
+    transition: color 0.2s;
+  }
+  .section-link::after { content: '→'; font-family: var(--serif-en); font-size: 14px; }
+  .section-link:hover { color: var(--gold); }
+
+  .program-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--ink-20);
+    border: 1px solid var(--ink-20);
+  }
+  .program-card {
+    background: var(--white);
+    padding: 40px 36px 48px;
+    position: relative; overflow: hidden;
+    cursor: none;
+    transition: background 0.3s;
+  }
+  .program-card:hover { background: var(--cream); }
+  .program-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: var(--gold); transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .program-card:hover::before { transform: scaleX(1); }
+  .program-number {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em;
+    color: var(--ink-20); margin-bottom: 32px;
+  }
+  .program-icon {
+    width: 40px; height: 40px; margin-bottom: 24px;
+    border: 1px solid var(--ink-20);
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--serif-en); font-style: italic;
+    font-size: 18px; color: var(--gold);
+    transition: border-color 0.3s;
+  }
+  .program-card:hover .program-icon { border-color: var(--gold); }
+  .program-title {
+    font-size: 18px; font-weight: 600; letter-spacing: 0.06em;
+    margin-bottom: 12px;
+  }
+  .program-desc {
+    font-size: 13px; line-height: 1.9; color: var(--ink-60);
+    margin-bottom: 32px;
+  }
+  .program-cta {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--gold);
+    display: flex; align-items: center; gap: 8px;
+  }
+  .program-cta::after { content: '→'; font-family: var(--serif-en); font-size: 13px; }
+
+  /* ─── NEWS ─── */
+  .news-section {
+    background: var(--cream);
+    padding: 96px 48px;
+    border-top: 1px solid var(--ink-20);
+  }
+  .news-list { display: flex; flex-direction: column; gap: 0; }
+  .news-item {
+    display: grid; grid-template-columns: 100px 1fr auto;
+    align-items: baseline;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--ink-20);
+    cursor: none; gap: 32px;
+    text-decoration: none; color: var(--ink);
+    transition: all 0.2s;
+  }
+  .news-item:hover .news-title { color: var(--gold); }
+  .news-date {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+    color: var(--ink-60);
+  }
+  .news-tag {
+    display: inline-block;
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
+    text-transform: uppercase; padding: 2px 8px;
+    border: 1px solid var(--ink-20); color: var(--ink-60);
+    margin-bottom: 6px;
+  }
+  .news-title {
+    font-size: 15px; font-weight: 400; letter-spacing: 0.03em;
+    transition: color 0.2s;
+  }
+  .news-arrow {
+    font-family: var(--serif-en); font-size: 18px; color: var(--ink-20);
+    transition: color 0.2s, transform 0.2s;
+  }
+  .news-item:hover .news-arrow { color: var(--gold); transform: translateX(4px); }
+
+  /* ─── DOCENT BAND ─── */
+  .docent-band {
+    display: grid; grid-template-columns: 1fr 1fr;
+    min-height: 480px;
+    border-top: 1px solid var(--ink-20);
+  }
+  .docent-visual {
+    background: var(--ink);
+    position: relative; overflow: hidden;
+    display: flex; align-items: flex-end;
+    padding: 48px;
+  }
+  .docent-visual-bg {
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 40px,
+      rgba(184,154,94,0.04) 40px, rgba(184,154,94,0.04) 41px
+    );
+  }
+  .docent-visual-content { position: relative; z-index: 1; }
+  .docent-visual-title {
+    font-family: var(--serif-en); font-size: 56px; font-weight: 300;
+    font-style: italic; color: var(--white); line-height: 1.0;
+    margin-bottom: 12px;
+  }
+  .docent-visual-sub {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    color: rgba(184,154,94,0.7); text-transform: uppercase;
+  }
+
+  .docent-info {
+    padding: 64px 56px;
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .docent-info .cell-tag { margin-bottom: 24px; }
+  .docent-desc {
+    font-size: 15px; line-height: 2.1; color: var(--ink-60);
+    margin-bottom: 40px; max-width: 420px;
+  }
+  .docent-chips {
+    display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
+  }
+  .chip {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.16em;
+    text-transform: uppercase; padding: 6px 14px;
+    border: 1px solid var(--ink-20); color: var(--ink-60);
+  }
+
+  /* ─── PARTNERS ─── */
+  .partners {
+    padding: 56px 48px;
+    border-top: 1px solid var(--ink-20);
+    display: flex; align-items: center; gap: 48px;
+  }
+  .partners-label {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: var(--ink-60);
+    white-space: nowrap; flex-shrink: 0;
+  }
+  .partners-divider {
+    width: 1px; height: 32px; background: var(--ink-20); flex-shrink: 0;
+  }
+  .partners-list {
+    display: flex; gap: 36px; align-items: center; flex-wrap: wrap;
+  }
+  .partner-name {
+    font-family: var(--serif-ko); font-size: 12px; font-weight: 400;
+    color: var(--ink-60); letter-spacing: 0.08em;
+    transition: color 0.2s; cursor: none; text-decoration: none;
+  }
+  .partner-name:hover { color: var(--gold); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--ink);
+    color: rgba(255,255,255,0.5);
+    padding: 64px 48px 40px;
+  }
+  .footer-top {
+    display: grid; grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 48px; margin-bottom: 56px;
+  }
+  .footer-brand .ko {
+    font-size: 16px; font-weight: 600; letter-spacing: 0.08em;
+    color: var(--white); margin-bottom: 4px;
+  }
+  .footer-brand .en {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.2em;
+    color: rgba(184,154,94,0.7); text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .footer-brand p { font-size: 12px; line-height: 1.9; }
+
+  .footer-col-title {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.25em;
+    text-transform: uppercase; color: rgba(184,154,94,0.7);
+    margin-bottom: 20px;
+  }
+  .footer-links { display: flex; flex-direction: column; gap: 10px; list-style: none; }
+  .footer-links a {
+    font-size: 13px; color: rgba(255,255,255,0.45);
+    text-decoration: none; transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--white); }
+
+  .footer-contact p { font-size: 13px; line-height: 2.0; }
+
+  .footer-bottom {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 28px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .footer-copy {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.18em;
+    color: rgba(255,255,255,0.25);
+  }
+  .footer-ssl {
+    font-family: var(--mono); font-size: 9px; letter-spacing: 0.15em;
+    color: rgba(184,154,94,0.5); display: flex; align-items: center; gap: 6px;
+  }
+  .ssl-dot { width: 5px; height: 5px; border-radius: 50%; background: #4caf82; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { min-height: 320px; position: relative; }
+    .hero-stats { width: 100%; }
+    .about-strip { grid-template-columns: 1fr; }
+    .about-cell { border-right: none; border-bottom: 1px solid var(--ink-20); }
+    .program-grid { grid-template-columns: 1fr; }
+    .docent-band { grid-template-columns: 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .partners { flex-wrap: wrap; gap: 24px; }
+    .news-item { grid-template-columns: 80px 1fr auto; gap: 16px; }
+    .hero-left { padding: 48px 24px; }
+  }
+
+  @media (max-width: 560px) {
+    .hero-left { padding: 40px 20px; }
+    .programs, .news-section { padding: 64px 20px; }
+    .partners { padding: 40px 20px; }
+    footer { padding: 48px 20px 32px; }
+    .footer-top { grid-template-columns: 1fr; }
+    .news-item { grid-template-columns: 1fr; gap: 8px; }
+    .news-date { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <span class="ko">서울도슨트협회</span>
+    <span class="en">Seoul Docent Association</span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#">협회 소개</a></li>
+    <li><a href="#">도슨트 소개</a></li>
+    <li><a href="#">교육 프로그램</a></li>
+    <li><a href="#">소식</a></li>
+  </ul>
+  <div class="nav-actions">
+    <a href="#" class="btn-outline">도슨트 의뢰</a>
+    <a href="#" class="btn-fill">교육 신청</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-label">Seoul Docent Association · Est. 2019</div>
+    <h1 class="hero-title">Art<br><em>Speaks</em><br>Through Us</h1>
+    <p class="hero-subtitle-ko">예술을 잇는 사람들</p>
+    <p class="hero-desc">
+      서울도슨트협회는 미술관·박물관 현장의 도슨트 전문성을 높이고, 예술과 관람객 사이의 진정한 대화를 이어가는 전문가 공동체입니다.
+    </p>
+    <div class="hero-cta">
+      <a href="#" class="btn-primary">교육 프로그램 보기</a>
+      <a href="#" class="btn-secondary">협회 소개</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-image-wrap">
+      <div class="hero-art">
+        <div class="hero-art-inner">
+          <div class="hero-art-circle"></div>
+          <span class="hero-art-label">예술 · 언어 · 사람</span>
+        </div>
+      </div>
+    </div>
+    <div class="hero-year">SDA · 2019 — 2026</div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">340+</span>
+      <span class="stat-label">Active Docents</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">80+</span>
+      <span class="stat-label">Partner Museums</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">12</span>
+      <span class="stat-label">Annual Programs</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<div class="about-strip">
+  <div class="about-cell">
+    <div class="cell-tag">Mission</div>
+    <div class="cell-heading">Who<br>We Are</div>
+    <p class="cell-body">도슨트 전문성 향상과 네트워크 구축을 통해 예술 문화 향유의 저변을 넓힙니다.</p>
+  </div>
+  <div class="about-cell">
+    <div class="cell-tag">Vision · 비전</div>
+    <p class="cell-mission">예술과 사람 사이, 가장 진실한 목소리로 서다.</p>
+  </div>
+  <div class="about-cell">
+    <div class="cell-tag">Location</div>
+    <div class="cell-heading">Seoul<br>Korea</div>
+    <p class="cell-body">종로구 종로 19<br>르메이에르 종로타운 902호<br><br>Tel. 010-7631-7766</p>
+  </div>
+</div>
+
+<!-- PROGRAMS -->
+<section class="programs">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      <div class="section-en">Education</div>
+      <div class="section-ko">교육 프로그램</div>
+    </div>
+    <a href="#" class="section-link">전체 보기</a>
+  </div>
+  <div class="program-grid">
+    <div class="program-card">
+      <div class="program-number">01</div>
+      <div class="program-icon">S</div>
+      <div class="program-title">SDA 도슨트 교육</div>
+      <p class="program-desc">도슨트 입문부터 심화까지, 체계적인 커리큘럼으로 현장 역량을 키웁니다. 미술사, 전시 해설 기법, 커뮤니케이션을 아우릅니다.</p>
+      <div class="program-cta">자세히 보기</div>
+    </div>
+    <div class="program-card">
+      <div class="program-number">02</div>
+      <div class="program-icon">L</div>
+      <div class="program-title">도슨트 리더 과정</div>
+      <p class="program-desc">팀장·선임 도슨트를 위한 리더십 과정. 현장 운영, 후배 지도, 기관 협력 역량을 집중적으로 개발합니다.</p>
+      <div class="program-cta">자세히 보기</div>
+    </div>
+    <div class="program-card">
+      <div class="program-number">03</div>
+      <div class="program-icon">E</div>
+      <div class="program-title">교육 신청 안내</div>
+      <p class="program-desc">봄·가을 학기 정규 과정 및 특별 워크숍에 대한 신청 일정과 요강을 확인하세요. 온라인 신청이 가능합니다.</p>
+      <div class="program-cta">신청하기</div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-section">
+  <div class="section-header">
+    <div class="section-title-wrap">
+      <div class="section-en">News</div>
+      <div class="section-ko">공지 · 협회소식</div>
+    </div>
+    <a href="#" class="section-link">더 보기</a>
+  </div>
+  <div class="news-list">
+    <a href="#" class="news-item">
+      <span class="news-date">2026.04.30</span>
+      <div>
+        <span class="news-tag">공지</span>
+        <div class="news-title">서울도슨트협회 26년 4월 주요 활동 안내</div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.04.05</span>
+      <div>
+        <span class="news-tag">소식</span>
+        <div class="news-title">3월에 진행된 서울도슨트협회 행사 활동 보고</div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.04.05</span>
+      <div>
+        <span class="news-tag">소식</span>
+        <div class="news-title">3월 봄학기 교육 프로그램 진행 현황</div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.03.04</span>
+      <div>
+        <span class="news-tag">뉴스레터</span>
+        <div class="news-title">서울도슨트협회 월간 뉴스레터 2026년 3월호</div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+    <a href="#" class="news-item">
+      <span class="news-date">2026.02.08</span>
+      <div>
+        <span class="news-tag">뉴스레터</span>
+        <div class="news-title">서울도슨트협회 월간 뉴스레터 2026년 2월호</div>
+      </div>
+      <span class="news-arrow">→</span>
+    </a>
+  </div>
+</section>
+
+<!-- DOCENT BAND -->
+<div class="docent-band">
+  <div class="docent-visual">
+    <div class="docent-visual-bg"></div>
+    <div class="docent-visual-content">
+      <div class="docent-visual-title">Docent<br><em>Inquiry</em></div>
+      <div class="docent-visual-sub">도슨트 의뢰 안내</div>
+    </div>
+  </div>
+  <div class="docent-info">
+    <div class="cell-tag">For Organizations · 기관·단체를 위한</div>
+    <p class="docent-desc">
+      미술관, 박물관, 기업, 학교 등 다양한 기관에 전문 도슨트를 파견합니다. 전시 해설부터 특별 프로그램 기획까지, 맞춤 서비스를 제공합니다.
+    </p>
+    <div class="docent-chips">
+      <span class="chip">미술관 · 박물관</span>
+      <span class="chip">기업 문화 행사</span>
+      <span class="chip">학교 연계 프로그램</span>
+      <span class="chip">특별 전시 해설</span>
+    </div>
+    <a href="#" class="btn-primary" style="display:inline-flex; width: fit-content;">도슨트 의뢰하기</a>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<div class="partners">
+  <span class="partners-label">Partners</span>
+  <div class="partners-divider"></div>
+  <div class="partners-list">
+    <a href="#" class="partner-name">국립현대미술관</a>
+    <a href="#" class="partner-name">서울시립미술관</a>
+    <a href="#" class="partner-name">예술의전당</a>
+    <a href="#" class="partner-name">김달진미술자료박물관</a>
+    <a href="#" class="partner-name">한국미술협회</a>
+    <a href="#" class="partner-name">한국화랑협회</a>
+    <a href="#" class="partner-name">한국사립미술관협회</a>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <div class="ko">서울도슨트협회</div>
+      <div class="en">Seoul Docent Association</div>
+      <p>예술과 사람을 잇는<br>전문가 공동체</p>
+    </div>
+    <div>
+      <div class="footer-col-title">협회</div>
+      <ul class="footer-links">
+        <li><a href="#">협회 소개</a></li>
+        <li><a href="#">인사말</a></li>
+        <li><a href="#">연혁</a></li>
+        <li><a href="#">조직도</a></li>
+        <li><a href="#">오시는 길</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-title">교육</div>
+      <ul class="footer-links">
+        <li><a href="#">SDA 교육 체계</a></li>
+        <li><a href="#">도슨트 교육</a></li>
+        <li><a href="#">리더 과정</a></li>
+        <li><a href="#">교육 신청</a></li>
+        <li><a href="#">자료실</a></li>
+      </ul>
+    </div>
+    <div class="footer-contact">
+      <div class="footer-col-title">Contact</div>
+      <p>
+        사무실: 서울시 종로구 종로 19<br>
+        9층 902호<br><br>
+        교육장: 서울시 중구 정동길 9<br>
+        프란치스코 교육회관 6층 620호<br><br>
+        Tel. 010-7631-7766
+      </p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 Seoul Docent Association. All rights reserved.</span>
+    <span class="footer-ssl"><span class="ssl-dot"></span> SSL Secured</span>
+  </div>
+</footer>
+
+<script>
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .program-card').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('expand'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('expand'));
+  });
+
+  // Scroll-reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.program-card, .news-item, .about-cell, .stat').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>

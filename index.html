@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울도슨트협회 — 홈페이지 리뉴얼 시안</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&family=Noto+Serif+KR:wght@400;600;700&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink:      #16140F;
+  --ink-60:   rgba(22,20,15,0.58);
+  --ink-20:   rgba(22,20,15,0.12);
+  --bg:       #F8F5EF;
+  --bg-card:  #FFFFFF;
+  --gold:     #8B6914;
+  --gold-lt:  #FDF5E4;
+  --teal:     #1B5E52;
+  --teal-lt:  #E6F4F1;
+  --sans: 'Noto Sans KR', sans-serif;
+  --serif-ko: 'Noto Serif KR', serif;
+  --serif-en: 'Cormorant Garamond', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.8;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+/* ── TOP HEADER ── */
+.top-bar {
+  background: var(--ink);
+  padding: 14px 56px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.top-bar-brand {
+  display: flex; align-items: center; gap: 14px;
+}
+.top-bar-dot {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--gold); animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50%      { opacity: 0.5; transform: scale(1.4); }
+}
+.top-bar-label {
+  font-size: 11px; font-weight: 500; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+}
+.top-bar-title {
+  font-family: var(--serif-ko); font-size: 14px; font-weight: 600;
+  color: rgba(255,255,255,0.85); letter-spacing: 0.06em;
+}
+.top-bar-meta {
+  font-size: 11px; letter-spacing: 0.14em;
+  color: rgba(255,255,255,0.35);
+}
+
+/* ── HERO ── */
+.hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 80px 40px 60px;
+  text-align: center;
+  position: relative; overflow: hidden;
+}
+
+/* geometric bg */
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(ellipse 60% 50% at 20% 40%, rgba(27,94,82,0.06) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 60%, rgba(139,105,20,0.07) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-grid-lines {
+  position: absolute; inset: 0; pointer-events: none; overflow: hidden;
+}
+.hero-grid-lines svg { width: 100%; height: 100%; }
+
+.hero-eyebrow {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 15px; letter-spacing: 0.12em;
+  color: var(--gold); margin-bottom: 32px;
+  opacity: 0; animation: riseIn 0.9s 0.1s forwards;
+}
+
+.hero-title {
+  font-family: var(--serif-ko);
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 700; line-height: 1.25;
+  letter-spacing: 0.04em; color: var(--ink);
+  margin-bottom: 20px;
+  opacity: 0; animation: riseIn 0.9s 0.25s forwards;
+}
+.hero-title span { color: var(--teal); }
+
+.hero-sub {
+  font-size: clamp(15px, 1.6vw, 18px); font-weight: 300;
+  color: var(--ink-60); letter-spacing: 0.04em;
+  max-width: 560px; line-height: 1.9; margin-bottom: 64px;
+  opacity: 0; animation: riseIn 0.9s 0.4s forwards;
+}
+
+/* ── CARDS ── */
+.cards {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 28px; max-width: 960px; width: 100%;
+  opacity: 0; animation: riseIn 0.9s 0.55s forwards;
+  position: relative; z-index: 1;
+}
+
+.version-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1.5px solid var(--ink-20);
+  display: flex; flex-direction: column;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s;
+  text-decoration: none; color: var(--ink);
+}
+.version-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 16px 56px rgba(0,0,0,0.12);
+  border-color: transparent;
+}
+.version-card.editorial:hover { box-shadow: 0 16px 56px rgba(139,105,20,0.18); }
+.version-card.accessible:hover { box-shadow: 0 16px 56px rgba(27,94,82,0.18); }
+
+/* Preview thumbnail */
+.card-preview {
+  height: 260px; position: relative; overflow: hidden;
+  flex-shrink: 0;
+}
+
+/* Editorial preview */
+.preview-editorial {
+  background: #F5F0E8;
+  display: flex; flex-direction: column;
+}
+.prev-nav {
+  background: rgba(250,248,244,0.9);
+  border-bottom: 1px solid rgba(26,24,20,0.1);
+  padding: 9px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.prev-logo-e { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; color: #1a1814; }
+.prev-links-e { display: flex; gap: 12px; }
+.prev-link-e { width: 28px; height: 5px; background: rgba(26,24,20,0.15); border-radius: 2px; }
+.prev-btn-e {
+  background: #8B6914; width: 52px; height: 18px; border-radius: 1px;
+}
+
+.prev-hero-e {
+  display: grid; grid-template-columns: 1fr 100px; flex: 1; gap: 0;
+}
+.prev-hero-left-e {
+  padding: 16px 18px; display: flex; flex-direction: column; gap: 8px;
+}
+.prev-label-e {
+  font-size: 6px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: #8B6914; display: flex; align-items: center; gap: 5px;
+}
+.prev-label-e::before { content: ''; width: 14px; height: 0.8px; background: #8B6914; display: block; }
+.prev-h1-e {
+  font-family: var(--serif-en); font-style: italic;
+  font-size: 24px; font-weight: 300; line-height: 1.1; color: #1a1814;
+}
+.prev-h1-e em { color: #8B6914; font-style: italic; }
+.prev-desc-e {
+  display: flex; flex-direction: column; gap: 3px;
+  border-left: 1px solid #8B6914; padding-left: 8px;
+}
+.prev-desc-line { height: 4px; border-radius: 1px; background: rgba(26,24,20,0.15); }
+.prev-btns-e { display: flex; gap: 6px; margin-top: 4px; }
+.prev-btn-p { background: #1a1814; width: 56px; height: 18px; border-radius: 0; }
+.prev-btn-s { background: transparent; border: 0.8px solid rgba(26,24,20,0.3); width: 44px; height: 18px; }
+
+.prev-hero-right-e {
+  background: linear-gradient(135deg, #c5b898, #d4c9b0);
+  display: flex; align-items: center; justify-content: center;
+}
+.prev-circle-e {
+  width: 44px; height: 44px; border-radius: 50%;
+  border: 1px solid rgba(184,154,94,0.5);
+  background: rgba(184,154,94,0.15);
+}
+
+.prev-stats-e {
+  border-top: 1px solid rgba(26,24,20,0.1);
+  display: flex;
+}
+.prev-stat-e {
+  flex: 1; padding: 6px 10px; border-right: 1px solid rgba(26,24,20,0.1);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.prev-stat-e:last-child { border: none; }
+.prev-stat-num { font-size: 10px; color: #8B6914; font-weight: 600; }
+.prev-stat-lbl { font-size: 5px; letter-spacing: 0.2em; color: rgba(26,24,20,0.45); text-transform: uppercase; }
+
+/* Accessible preview */
+.preview-accessible { background: #FAFAF7; display: flex; flex-direction: column; }
+.prev-nav-a {
+  background: #FAFAF7;
+  border-bottom: 2px solid rgba(28,28,26,0.12);
+  padding: 10px 18px;
+  display: flex; align-items: center; justify-content: space-between;
+  gap: 10px;
+}
+.prev-logo-a { font-size: 11px; font-weight: 700; letter-spacing: 0.06em; color: #1C1C1A; }
+.prev-links-a { display: flex; gap: 10px; }
+.prev-link-a { font-size: 7px; color: rgba(28,28,26,0.5); font-weight: 500; }
+.prev-btns-a { display: flex; gap: 6px; }
+.prev-gbtn { border: 1.5px solid #1B5E52; color: #1B5E52; font-size: 7px; padding: 3px 8px; font-weight: 700; border-radius: 2px; }
+.prev-sbtn { background: #1B5E52; color: #fff; font-size: 7px; padding: 3px 8px; font-weight: 700; border-radius: 2px; }
+
+.prev-hero-a {
+  display: grid; grid-template-columns: 1fr 90px; flex: 1;
+}
+.prev-hero-left-a {
+  padding: 14px 18px; display: flex; flex-direction: column; gap: 6px;
+}
+.prev-badge-a {
+  display: inline-flex; align-items: center; gap: 4px;
+  background: #FDF5E4; border: 1px solid #8B6914;
+  border-radius: 20px; padding: 2px 8px;
+  font-size: 5.5px; font-weight: 700; color: #8B6914; letter-spacing: 0.1em;
+  width: fit-content;
+}
+.prev-h1-a {
+  font-family: var(--serif-ko); font-size: 14px; font-weight: 700;
+  line-height: 1.35; color: #1C1C1A;
+}
+.prev-h1-a em { font-style: normal; color: #1B5E52; }
+.prev-desc-a { display: flex; flex-direction: column; gap: 2.5px; }
+.prev-desc-line-a { height: 4.5px; border-radius: 1px; background: rgba(28,28,26,0.14); }
+.prev-btns2-a { display: flex; gap: 5px; margin-top: 2px; }
+.prev-btn-t { background: #1B5E52; color: #fff; font-size: 6px; font-weight: 700; padding: 4px 10px; border-radius: 2px; }
+.prev-btn-o { border: 1.5px solid #1B5E52; color: #1B5E52; font-size: 6px; font-weight: 700; padding: 4px 10px; border-radius: 2px; }
+
+.prev-hero-right-a {
+  background: #1B5E52;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 8px; padding: 12px 8px;
+}
+.prev-stat-a { text-align: center; }
+.prev-stat-a-num { font-size: 13px; font-weight: 700; color: #fff; display: block; }
+.prev-stat-a-lbl { font-size: 5px; color: rgba(255,255,255,0.65); letter-spacing: 0.1em; }
+.prev-stat-a-div { width: 24px; height: 1px; background: rgba(255,255,255,0.2); }
+
+.prev-ql {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-top: 2px solid rgba(28,28,26,0.12);
+}
+.prev-ql-item {
+  padding: 6px 10px; border-right: 1px solid rgba(28,28,26,0.1);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.prev-ql-item:last-child { border: none; }
+.prev-ql-icon { font-size: 9px; }
+.prev-ql-t { font-size: 7px; font-weight: 700; color: #1C1C1A; }
+.prev-ql-s { font-size: 5.5px; color: rgba(28,28,26,0.5); }
+
+/* Card body */
+.card-body {
+  padding: 28px 32px 32px;
+  display: flex; flex-direction: column; gap: 16px; flex: 1;
+}
+
+.card-tag {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 5px 14px; border-radius: 40px;
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; width: fit-content;
+}
+.tag-editorial { background: var(--gold-lt); color: var(--gold); }
+.tag-accessible { background: var(--teal-lt); color: var(--teal); }
+
+.card-name {
+  font-family: var(--serif-ko); font-size: 22px; font-weight: 700;
+  line-height: 1.3; letter-spacing: 0.04em; color: var(--ink);
+}
+
+.card-desc {
+  font-size: 14px; line-height: 1.9; color: var(--ink-60);
+}
+
+.card-features {
+  display: flex; flex-direction: column; gap: 9px; padding: 20px;
+  background: var(--bg); border-radius: 10px;
+}
+.feature-row {
+  display: flex; align-items: center; gap: 10px;
+  font-size: 13px; color: var(--ink-60);
+}
+.feature-dot {
+  width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0;
+}
+.dot-gold { background: var(--gold); }
+.dot-teal { background: var(--teal); }
+
+.card-cta {
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  padding: 16px 24px; border-radius: 8px;
+  font-size: 15px; font-weight: 700; letter-spacing: 0.06em;
+  transition: all 0.2s; margin-top: auto; cursor: pointer;
+  border: none; width: 100%; text-decoration: none;
+}
+.cta-editorial {
+  background: var(--gold); color: #fff;
+}
+.cta-editorial:hover { background: #7A5C10; }
+.cta-accessible {
+  background: var(--teal); color: #fff;
+}
+.cta-accessible:hover { background: #144740; }
+
+/* ── COMPARISON TABLE ── */
+.comparison {
+  max-width: 960px; width: 100%; margin-top: 56px;
+  opacity: 0; animation: riseIn 0.9s 0.7s forwards;
+  position: relative; z-index: 1;
+}
+.comp-title {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ink-60);
+  margin-bottom: 20px; text-align: center;
+}
+.comp-table {
+  background: var(--bg-card); border-radius: 12px;
+  border: 1.5px solid var(--ink-20);
+  overflow: hidden;
+}
+.comp-row {
+  display: grid; grid-template-columns: 180px 1fr 1fr;
+  border-bottom: 1px solid var(--ink-20);
+}
+.comp-row:last-child { border-bottom: none; }
+.comp-row.header { background: var(--ink); }
+.comp-cell {
+  padding: 16px 24px; font-size: 14px;
+  border-right: 1px solid var(--ink-20);
+  display: flex; align-items: center;
+}
+.comp-cell:last-child { border-right: none; }
+.comp-row.header .comp-cell { color: rgba(255,255,255,0.55); font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; }
+.comp-row.header .comp-cell:nth-child(2) { color: #d4b97a; }
+.comp-row.header .comp-cell:nth-child(3) { color: #7ecfc2; }
+.comp-label { font-size: 13px; font-weight: 600; color: var(--ink-60); }
+.comp-val { font-size: 14px; color: var(--ink); line-height: 1.5; }
+.badge-s { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 11px; font-weight: 700; }
+.bs-gold { background: var(--gold-lt); color: var(--gold); }
+.bs-teal { background: var(--teal-lt); color: var(--teal); }
+
+/* ── FOOTER ── */
+.page-footer {
+  text-align: center; padding: 48px 24px 40px;
+  font-size: 12px; letter-spacing: 0.1em;
+  color: var(--ink-60); position: relative; z-index: 1;
+}
+.page-footer strong { color: var(--ink); font-weight: 600; }
+
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 720px) {
+  .cards { grid-template-columns: 1fr; }
+  .top-bar { padding: 12px 20px; }
+  .top-bar-meta { display: none; }
+  .hero { padding: 60px 20px 48px; }
+  .comp-table { overflow-x: auto; }
+  .comp-row { grid-template-columns: 120px 1fr 1fr; min-width: 500px; }
+}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="top-bar" role="banner">
+  <div class="top-bar-brand">
+    <div class="top-bar-dot" aria-hidden="true"></div>
+    <span class="top-bar-label">Design Prototype</span>
+    <span class="top-bar-title">서울도슨트협회 홈페이지 리뉴얼 시안</span>
+  </div>
+  <span class="top-bar-meta">2026 · Redesign Concept</span>
+</div>
+
+<!-- HERO -->
+<section class="hero" role="main">
+  <!-- decorative grid -->
+  <div class="hero-grid-lines" aria-hidden="true">
+    <svg viewBox="0 0 1400 900" preserveAspectRatio="xMidYMid slice">
+      <line x1="0" y1="300" x2="1400" y2="300" stroke="rgba(22,20,15,0.04)" stroke-width="1"/>
+      <line x1="0" y1="600" x2="1400" y2="600" stroke="rgba(22,20,15,0.04)" stroke-width="1"/>
+      <line x1="400" y1="0" x2="400" y2="900" stroke="rgba(22,20,15,0.04)" stroke-width="1"/>
+      <line x1="1000" y1="0" x2="1000" y2="900" stroke="rgba(22,20,15,0.04)" stroke-width="1"/>
+      <circle cx="700" cy="450" r="320" fill="none" stroke="rgba(22,20,15,0.03)" stroke-width="1"/>
+      <circle cx="700" cy="450" r="220" fill="none" stroke="rgba(22,20,15,0.03)" stroke-width="1"/>
+    </svg>
+  </div>
+
+  <p class="hero-eyebrow">Seoul Docent Association · Homepage Redesign</p>
+
+  <h1 class="hero-title">
+    두 가지 디자인 시안,<br><span>직접 확인해보세요</span>
+  </h1>
+
+  <p class="hero-sub">
+    세련된 에디토리얼 버전과 60대 회원을 위한 고시인성 버전입니다.<br>
+    각 카드를 클릭하면 실제 디자인을 확인할 수 있습니다.
+  </p>
+
+  <!-- VERSION CARDS -->
+  <div class="cards">
+
+    <!-- CARD 1: Editorial -->
+    <a href="seouldocent_redesign.html" class="version-card editorial" target="_blank" rel="noopener" aria-label="세련된 에디토리얼 버전 열기">
+      <div class="card-preview preview-editorial">
+        <!-- mini nav -->
+        <div class="prev-nav">
+          <div class="prev-logo-e">서울도슨트협회</div>
+          <div class="prev-links-e">
+            <div class="prev-link-e"></div>
+            <div class="prev-link-e"></div>
+            <div class="prev-link-e"></div>
+            <div class="prev-link-e"></div>
+          </div>
+          <div class="prev-btn-e"></div>
+        </div>
+        <!-- mini hero -->
+        <div class="prev-hero-e" style="flex:1;">
+          <div class="prev-hero-left-e">
+            <div class="prev-label-e">Seoul Docent Association</div>
+            <div class="prev-h1-e">Art<br><em>Speaks</em><br>Through Us</div>
+            <div class="prev-desc-e">
+              <div class="prev-desc-line" style="width:90%"></div>
+              <div class="prev-desc-line" style="width:80%"></div>
+              <div class="prev-desc-line" style="width:70%"></div>
+            </div>
+            <div class="prev-btns-e">
+              <div class="prev-btn-p"></div>
+              <div class="prev-btn-s"></div>
+            </div>
+          </div>
+          <div class="prev-hero-right-e">
+            <div class="prev-circle-e"></div>
+          </div>
+        </div>
+        <!-- stats -->
+        <div class="prev-stats-e">
+          <div class="prev-stat-e">
+            <div class="prev-stat-num">340+</div>
+            <div class="prev-stat-lbl">Active Docents</div>
+          </div>
+          <div class="prev-stat-e">
+            <div class="prev-stat-num">80+</div>
+            <div class="prev-stat-lbl">Museums</div>
+          </div>
+          <div class="prev-stat-e">
+            <div class="prev-stat-num">12</div>
+            <div class="prev-stat-lbl">Programs</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-tag tag-editorial">✦ 에디토리얼 버전</div>
+        <div class="card-name">세련된 아트 갤러리 스타일</div>
+        <p class="card-desc">고급 예술지에서 영감 받은 에디토리얼 레이아웃. 세리프 타이포그래피와 절제된 골드 컬러로 문화 기관의 품격을 표현합니다.</p>
+        <div class="card-features">
+          <div class="feature-row">
+            <div class="feature-dot dot-gold"></div>
+            Cormorant Garamond 세리프 폰트
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-gold"></div>
+            크림 화이트 + 인크 블랙 + 골드 팔레트
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-gold"></div>
+            커스텀 커서 · 스크롤 애니메이션
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-gold"></div>
+            2단 그리드 · 에디토리얼 레이아웃
+          </div>
+        </div>
+        <div class="card-cta cta-editorial">
+          에디토리얼 버전 열기 →
+        </div>
+      </div>
+    </a>
+
+    <!-- CARD 2: Accessible -->
+    <a href="seouldocent_accessible.html" class="version-card accessible" target="_blank" rel="noopener" aria-label="고시인성 버전 열기">
+      <div class="card-preview preview-accessible">
+        <!-- mini nav -->
+        <div class="prev-nav-a">
+          <div class="prev-logo-a">서울도슨트협회</div>
+          <div class="prev-links-a">
+            <span class="prev-link-a">협회 소개</span>
+            <span class="prev-link-a">교육</span>
+            <span class="prev-link-a">소식</span>
+          </div>
+          <div class="prev-btns-a">
+            <div class="prev-gbtn">도슨트 의뢰</div>
+            <div class="prev-sbtn">교육 신청</div>
+          </div>
+        </div>
+        <!-- mini hero -->
+        <div class="prev-hero-a" style="flex:1;">
+          <div class="prev-hero-left-a">
+            <div class="prev-badge-a">★ 사단법인 서울도슨트협회</div>
+            <div class="prev-h1-a">예술과 사람을 잇는<br><em>전문가 공동체</em></div>
+            <div class="prev-desc-a">
+              <div class="prev-desc-line-a" style="width:95%"></div>
+              <div class="prev-desc-line-a" style="width:88%"></div>
+              <div class="prev-desc-line-a" style="width:75%"></div>
+            </div>
+            <div class="prev-btns2-a">
+              <div class="prev-btn-t">교육 프로그램 보기 →</div>
+              <div class="prev-btn-o">협회 소개</div>
+            </div>
+          </div>
+          <div class="prev-hero-right-a">
+            <div class="prev-stat-a">
+              <span class="prev-stat-a-num">340+</span>
+              <span class="prev-stat-a-lbl">활동 도슨트</span>
+            </div>
+            <div class="prev-stat-a-div"></div>
+            <div class="prev-stat-a">
+              <span class="prev-stat-a-num">80+</span>
+              <span class="prev-stat-a-lbl">협력 기관</span>
+            </div>
+            <div class="prev-stat-a-div"></div>
+            <div class="prev-stat-a">
+              <span class="prev-stat-a-num">2019</span>
+              <span class="prev-stat-a-lbl">설립 연도</span>
+            </div>
+          </div>
+        </div>
+        <!-- quick links -->
+        <div class="prev-ql">
+          <div class="prev-ql-item">
+            <span class="prev-ql-icon">🎓</span>
+            <div class="prev-ql-t">교육 신청</div>
+            <div class="prev-ql-s">봄·가을 모집 중</div>
+          </div>
+          <div class="prev-ql-item">
+            <span class="prev-ql-icon">📢</span>
+            <div class="prev-ql-t">공지사항</div>
+            <div class="prev-ql-s">최신 소식</div>
+          </div>
+          <div class="prev-ql-item">
+            <span class="prev-ql-icon">🤝</span>
+            <div class="prev-ql-t">도슨트 의뢰</div>
+            <div class="prev-ql-s">기관 문의</div>
+          </div>
+          <div class="prev-ql-item">
+            <span class="prev-ql-icon">📁</span>
+            <div class="prev-ql-t">자료실</div>
+            <div class="prev-ql-s">회원 전용</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-body">
+        <div class="card-tag tag-accessible">♿ 고시인성 버전</div>
+        <div class="card-name">60대 회원을 위한 고가독성 디자인</div>
+        <p class="card-desc">WCAG AAA 기준 대비비 · 최소 18px 본문 · 52px 클릭 영역. 세련미를 유지하면서 누구나 편하게 읽고 사용할 수 있는 접근성 중심 디자인입니다.</p>
+        <div class="card-features">
+          <div class="feature-row">
+            <div class="feature-dot dot-teal"></div>
+            본문 최소 18px · 행간 1.9 · 자간 확대
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-teal"></div>
+            WCAG AAA 색상 대비비 7:1 이상
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-teal"></div>
+            글자 크기 조절 위젯 (가 / 가+ / 가++)
+          </div>
+          <div class="feature-row">
+            <div class="feature-dot dot-teal"></div>
+            빠른 메뉴 · 52px 최소 클릭 영역
+          </div>
+        </div>
+        <div class="card-cta cta-accessible">
+          고시인성 버전 열기 →
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <div class="comparison" role="region" aria-label="버전 비교표">
+    <div class="comp-title">두 버전 비교</div>
+    <div class="comp-table" role="table" aria-label="에디토리얼 버전과 고시인성 버전 비교">
+      <div class="comp-row header" role="row">
+        <div class="comp-cell" role="columnheader">항목</div>
+        <div class="comp-cell" role="columnheader">✦ 에디토리얼 버전</div>
+        <div class="comp-cell" role="columnheader">♿ 고시인성 버전</div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">본문 폰트 크기</span></div>
+        <div class="comp-cell"><span class="comp-val">14–15px</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">18px 기본 · 조절 가능</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">색상 대비비</span></div>
+        <div class="comp-cell"><span class="comp-val">AA 수준</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">AAA · 7:1 이상</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">버튼 크기</span></div>
+        <div class="comp-cell"><span class="comp-val">38–44px</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">52–56px 최소 보장</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">주요 폰트</span></div>
+        <div class="comp-cell"><span class="comp-val">Cormorant + Noto Serif KR</span></div>
+        <div class="comp-cell"><span class="comp-val">Noto Serif KR + Noto Sans KR</span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">분위기</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-gold">갤러리 · 에디토리얼</span></span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">신뢰감 · 접근성 중심</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">글자 크기 조절</span></div>
+        <div class="comp-cell"><span class="comp-val">미지원</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">3단계 위젯 제공</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">빠른 메뉴</span></div>
+        <div class="comp-cell"><span class="comp-val">미지원</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">히어로 하단 4칸</span></span></div>
+      </div>
+      <div class="comp-row" role="row">
+        <div class="comp-cell"><span class="comp-label">추천 대상</span></div>
+        <div class="comp-cell"><span class="comp-val">신규 방문자 · 홍보용</span></div>
+        <div class="comp-cell"><span class="comp-val"><span class="badge-s bs-teal">기존 회원 · 일상 사용</span></span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="page-footer">
+    <strong>서울도슨트협회 홈페이지 리뉴얼 시안</strong> · 2026 · 디자인 프로토타입<br>
+    본 시안은 시연 목적으로 제작된 디자인 컨셉입니다.
+  </footer>
+</section>
+
+</body>
+</html>

@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>서울도슨트협회</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+
+/* ══════════════════════════════════════════
+   DESIGN INTENT
+   - 주요 본문 최소 18px, 제목은 28px+
+   - 배경 #FAFAF7(따뜻한 오프화이트), 텍스트 #1C1C1A (WCAG AAA)
+   - 대비비 모든 텍스트 7:1 이상
+   - 클릭 영역 최소 52px 높이
+   - 세리프 제목 + 산세리프 본문 구조로 품격 + 가독성 공존
+   - 행간 1.9 이상, 자간 0.04em 이상
+   ══════════════════════════════════════════ */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #FAFAF7;
+  --bg-warm:   #F3EEE5;
+  --bg-deep:   #EDE7DB;
+  --ink:       #1C1C1A;
+  --ink-mid:   #4A4845;
+  --ink-soft:  #7A7570;
+  --gold:      #8B6914;
+  --gold-bg:   #FDF5E4;
+  --teal:      #1B5E52;
+  --teal-bg:   #E6F4F1;
+  --border:    rgba(28,28,26,0.14);
+  --border-md: rgba(28,28,26,0.22);
+  --sans:      'Noto Sans KR', sans-serif;
+  --serif:     'Noto Serif KR', serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 1.9;
+  letter-spacing: 0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+/* ── SKIP NAV ── */
+.skip-link {
+  position: absolute; top: -60px; left: 20px;
+  background: var(--teal); color: #fff;
+  padding: 12px 20px; font-size: 16px; font-weight: 700;
+  border-radius: 0 0 6px 6px; z-index: 9999;
+  transition: top 0.2s;
+}
+.skip-link:focus { top: 0; }
+
+/* ══ NAV ══ */
+nav {
+  position: sticky; top: 0; z-index: 200;
+  background: var(--bg);
+  border-bottom: 2px solid var(--border);
+  padding: 0 48px;
+  display: flex; align-items: center; justify-content: space-between;
+  min-height: 72px;
+}
+
+.logo {
+  text-decoration: none; color: var(--ink);
+  display: flex; flex-direction: column; gap: 2px;
+}
+.logo-main {
+  font-family: var(--serif); font-size: 22px; font-weight: 700;
+  letter-spacing: 0.06em; line-height: 1.2;
+}
+.logo-sub {
+  font-size: 11px; font-weight: 400; letter-spacing: 0.18em;
+  color: var(--gold); text-transform: uppercase;
+}
+
+.nav-menu {
+  display: flex; gap: 4px; list-style: none;
+}
+.nav-menu a {
+  display: flex; align-items: center;
+  padding: 14px 18px; min-height: 52px;
+  font-size: 17px; font-weight: 500; letter-spacing: 0.04em;
+  color: var(--ink-mid); text-decoration: none; border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+.nav-menu a:hover, .nav-menu a:focus {
+  background: var(--bg-warm); color: var(--ink);
+  outline: none;
+}
+
+.nav-btns { display: flex; gap: 10px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 52px; padding: 0 28px;
+  font-family: var(--sans); font-size: 16px; font-weight: 700;
+  letter-spacing: 0.06em; border-radius: 4px;
+  text-decoration: none; cursor: pointer; border: 2px solid transparent;
+  transition: all 0.18s;
+}
+.btn-ghost {
+  color: var(--teal); border-color: var(--teal);
+  background: transparent;
+}
+.btn-ghost:hover { background: var(--teal-bg); }
+.btn-solid {
+  color: #fff; background: var(--teal); border-color: var(--teal);
+}
+.btn-solid:hover { background: #144740; border-color: #144740; }
+.btn-gold {
+  color: #fff; background: var(--gold); border-color: var(--gold);
+}
+.btn-gold:hover { background: #7A5C10; border-color: #7A5C10; }
+
+/* ══ HERO ══ */
+.hero {
+  background: var(--bg-warm);
+  border-bottom: 2px solid var(--border);
+  display: grid; grid-template-columns: 1fr 400px;
+  min-height: 560px;
+  overflow: hidden;
+}
+
+.hero-body {
+  padding: 80px 64px 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: var(--gold-bg); border: 1.5px solid var(--gold);
+  color: var(--gold); border-radius: 40px;
+  padding: 6px 16px; font-size: 13px; font-weight: 700;
+  letter-spacing: 0.12em; text-transform: uppercase;
+  margin-bottom: 28px; width: fit-content;
+}
+
+.hero-title {
+  font-family: var(--serif);
+  font-size: clamp(38px, 4.5vw, 60px);
+  font-weight: 700; line-height: 1.35;
+  letter-spacing: 0.03em; color: var(--ink);
+  margin-bottom: 24px;
+}
+.hero-title em {
+  font-style: normal; color: var(--teal);
+  border-bottom: 3px solid var(--teal);
+  padding-bottom: 2px;
+}
+
+.hero-desc {
+  font-size: 19px; line-height: 2.0; color: var(--ink-mid);
+  max-width: 520px; margin-bottom: 48px;
+}
+
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+
+/* Hero visual panel */
+.hero-visual {
+  background: var(--teal);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 56px 40px; gap: 32px;
+  position: relative; overflow: hidden;
+}
+.hero-visual::before {
+  content: '';
+  position: absolute; top: -60px; right: -60px;
+  width: 240px; height: 240px; border-radius: 50%;
+  background: rgba(255,255,255,0.06);
+}
+.hero-visual::after {
+  content: '';
+  position: absolute; bottom: -40px; left: -40px;
+  width: 160px; height: 160px; border-radius: 50%;
+  background: rgba(255,255,255,0.04);
+}
+
+.hero-stat-block {
+  text-align: center; color: #fff; position: relative; z-index: 1;
+}
+.hero-stat-num {
+  font-family: var(--serif); font-size: 52px; font-weight: 700;
+  line-height: 1.1; color: #fff; display: block; margin-bottom: 6px;
+}
+.hero-stat-label {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.75);
+}
+.hero-stat-divider {
+  width: 48px; height: 1.5px; background: rgba(255,255,255,0.25);
+}
+
+/* ══ QUICK LINKS ══ */
+.quicklinks {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  border-bottom: 2px solid var(--border);
+}
+.ql-item {
+  display: flex; flex-direction: column; gap: 8px;
+  padding: 32px 36px; text-decoration: none;
+  border-right: 1.5px solid var(--border);
+  color: var(--ink); background: var(--bg);
+  transition: background 0.18s;
+  min-height: 120px; justify-content: center;
+}
+.ql-item:last-child { border-right: none; }
+.ql-item:hover { background: var(--bg-warm); }
+.ql-icon {
+  width: 40px; height: 40px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 4px;
+}
+.ql-icon.teal { background: var(--teal-bg); }
+.ql-icon.gold { background: var(--gold-bg); }
+.ql-title {
+  font-size: 18px; font-weight: 700; letter-spacing: 0.04em; color: var(--ink);
+}
+.ql-sub {
+  font-size: 14px; color: var(--ink-soft); letter-spacing: 0.03em;
+}
+
+/* ══ SECTION BASE ══ */
+section { padding: 96px 64px; }
+section + section { border-top: 2px solid var(--border); }
+
+.section-eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 14px; display: flex; align-items: center; gap: 10px;
+}
+.section-eyebrow::before {
+  content: ''; display: block; width: 28px; height: 2px; background: var(--gold);
+}
+.section-title {
+  font-family: var(--serif); font-size: clamp(30px, 3vw, 44px);
+  font-weight: 700; line-height: 1.35; letter-spacing: 0.03em;
+  color: var(--ink); margin-bottom: 16px;
+}
+.section-lead {
+  font-size: 18px; line-height: 2.0; color: var(--ink-mid);
+  max-width: 640px; margin-bottom: 56px;
+}
+
+/* ══ PROGRAMS ══ */
+.program-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px;
+}
+
+.program-card {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 8px; padding: 40px 36px 44px;
+  display: flex; flex-direction: column; gap: 16px;
+  text-decoration: none; color: var(--ink);
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  position: relative; overflow: hidden;
+}
+.program-card:hover {
+  border-color: var(--teal);
+  box-shadow: 0 6px 32px rgba(27,94,82,0.10);
+  transform: translateY(-3px);
+}
+.program-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: var(--teal); transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.program-card:hover::after { transform: scaleX(1); }
+
+.card-num {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.22em;
+  color: var(--ink-soft); text-transform: uppercase;
+}
+.card-icon-wrap {
+  width: 56px; height: 56px; border-radius: 10px;
+  background: var(--teal-bg); display: flex;
+  align-items: center; justify-content: center;
+  font-size: 26px;
+}
+.card-title {
+  font-family: var(--serif); font-size: 22px; font-weight: 700;
+  line-height: 1.4; letter-spacing: 0.04em; color: var(--ink);
+}
+.card-desc {
+  font-size: 16px; line-height: 1.95; color: var(--ink-mid); flex: 1;
+}
+.card-cta {
+  display: inline-flex; align-items: center; gap: 8px;
+  font-size: 16px; font-weight: 700; color: var(--teal);
+  letter-spacing: 0.06em; margin-top: 8px;
+}
+.card-cta::after { content: '→'; font-size: 18px; }
+
+/* ══ NEWS ══ */
+.news-bg { background: var(--bg-warm); }
+
+.news-header {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  margin-bottom: 40px;
+}
+.news-more {
+  font-size: 16px; font-weight: 700; color: var(--teal);
+  text-decoration: none; letter-spacing: 0.06em;
+  display: flex; align-items: center; gap: 6px;
+  padding: 10px 4px; border-bottom: 2px solid var(--teal);
+  transition: color 0.15s;
+}
+.news-more:hover { color: #0f3d35; }
+
+.news-list { display: flex; flex-direction: column; }
+
+.news-row {
+  display: grid; grid-template-columns: 100px 72px 1fr 52px;
+  align-items: center; gap: 24px;
+  padding: 22px 0;
+  border-top: 1.5px solid var(--border);
+  text-decoration: none; color: var(--ink);
+  transition: background 0.15s;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.news-list .news-row:last-child { border-bottom: 1.5px solid var(--border); }
+.news-row:hover { background: var(--bg-deep); padding-left: 12px; padding-right: 12px; margin: 0 -12px; }
+
+.news-date {
+  font-size: 14px; font-weight: 500; color: var(--ink-soft);
+  letter-spacing: 0.05em; white-space: nowrap;
+}
+.news-badge {
+  display: inline-flex; align-items: center; justify-content: center;
+  padding: 4px 10px; border-radius: 4px;
+  font-size: 12px; font-weight: 700; letter-spacing: 0.1em;
+  white-space: nowrap;
+}
+.badge-notice { background: var(--teal-bg); color: var(--teal); }
+.badge-news   { background: var(--gold-bg);  color: var(--gold); }
+.badge-letter { background: #F0EBF8; color: #5B3E8F; }
+
+.news-title {
+  font-size: 18px; font-weight: 500; line-height: 1.55;
+  letter-spacing: 0.03em; color: var(--ink);
+}
+.news-arrow {
+  font-size: 22px; color: var(--border-md); text-align: center;
+  transition: color 0.2s, transform 0.2s;
+}
+.news-row:hover .news-arrow { color: var(--teal); transform: translateX(4px); }
+
+/* ══ DOCENT REQUEST ══ */
+.request-band {
+  background: var(--ink);
+  padding: 96px 64px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px;
+  align-items: center;
+}
+.request-eyebrow {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 20px;
+}
+.request-title {
+  font-family: var(--serif); font-size: clamp(30px, 3vw, 48px);
+  font-weight: 700; line-height: 1.35; color: #fff;
+  letter-spacing: 0.03em; margin-bottom: 20px;
+}
+.request-desc {
+  font-size: 18px; line-height: 2.0; color: rgba(255,255,255,0.72);
+  margin-bottom: 40px;
+}
+.request-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+.chip {
+  padding: 8px 18px; border-radius: 40px;
+  border: 1.5px solid rgba(255,255,255,0.22);
+  font-size: 15px; font-weight: 500; color: rgba(255,255,255,0.75);
+  letter-spacing: 0.04em;
+}
+
+.request-info {
+  background: rgba(255,255,255,0.06);
+  border: 1.5px solid rgba(255,255,255,0.12);
+  border-radius: 12px; padding: 40px;
+  display: flex; flex-direction: column; gap: 28px;
+}
+.req-row { display: flex; gap: 16px; align-items: flex-start; }
+.req-icon {
+  width: 48px; height: 48px; flex-shrink: 0; border-radius: 8px;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center; font-size: 22px;
+}
+.req-text-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(255,255,255,0.45);
+  margin-bottom: 4px;
+}
+.req-text-val {
+  font-size: 17px; font-weight: 500; color: rgba(255,255,255,0.88);
+  line-height: 1.6;
+}
+
+/* ══ PARTNERS ══ */
+.partners-section {
+  padding: 56px 64px; background: var(--bg);
+  border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);
+  display: flex; align-items: center; gap: 48px; flex-wrap: wrap;
+}
+.partners-label {
+  font-size: 13px; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--ink-soft);
+  flex-shrink: 0; white-space: nowrap;
+}
+.partners-div { width: 1.5px; height: 36px; background: var(--border-md); flex-shrink: 0; }
+.partner-list { display: flex; flex-wrap: wrap; gap: 12px; }
+.partner-tag {
+  font-size: 15px; font-weight: 500; letter-spacing: 0.04em;
+  padding: 8px 18px; border: 1.5px solid var(--border-md);
+  border-radius: 4px; color: var(--ink-mid); text-decoration: none;
+  background: var(--bg); transition: all 0.18s;
+}
+.partner-tag:hover { border-color: var(--teal); color: var(--teal); background: var(--teal-bg); }
+
+/* ══ FOOTER ══ */
+footer {
+  background: #141412; color: rgba(255,255,255,0.55);
+  padding: 72px 64px 40px;
+}
+.footer-grid {
+  display: grid; grid-template-columns: 1.4fr 1fr 1fr 1.4fr;
+  gap: 56px; margin-bottom: 64px;
+}
+.footer-brand-name {
+  font-family: var(--serif); font-size: 20px; font-weight: 700;
+  color: #fff; letter-spacing: 0.06em; margin-bottom: 4px;
+}
+.footer-brand-en {
+  font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+  color: rgba(184,154,94,0.6); margin-bottom: 20px;
+}
+.footer-brand-desc {
+  font-size: 15px; line-height: 1.95; color: rgba(255,255,255,0.5);
+}
+.footer-col-head {
+  font-size: 12px; font-weight: 700; letter-spacing: 0.22em;
+  text-transform: uppercase; color: rgba(255,255,255,0.3);
+  margin-bottom: 20px;
+}
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.footer-links a {
+  font-size: 16px; font-weight: 400; color: rgba(255,255,255,0.55);
+  text-decoration: none; letter-spacing: 0.03em;
+  padding: 4px 0; transition: color 0.15s;
+}
+.footer-links a:hover { color: #fff; }
+.footer-contact-text { font-size: 15px; line-height: 2.1; }
+.footer-tel {
+  margin-top: 16px; font-family: var(--serif); font-size: 22px;
+  font-weight: 700; color: rgba(255,255,255,0.85); letter-spacing: 0.04em;
+}
+
+.footer-bottom {
+  border-top: 1px solid rgba(255,255,255,0.08);
+  padding-top: 28px;
+  display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 12px;
+}
+.footer-copy { font-size: 13px; letter-spacing: 0.08em; }
+.footer-ssl {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; letter-spacing: 0.12em;
+  color: rgba(76,175,130,0.7);
+}
+.ssl-dot { width: 6px; height: 6px; border-radius: 50%; background: #4caf82; }
+
+/* ══ SCROLL REVEAL ══ */
+.reveal {
+  opacity: 0; transform: translateY(28px);
+  transition: opacity 0.65s ease, transform 0.65s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ══ RESPONSIVE ══ */
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr 320px; }
+  .program-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  nav { padding: 0 24px; }
+  .nav-menu { display: none; }
+  .hero { grid-template-columns: 1fr; }
+  .hero-visual { min-height: 220px; flex-direction: row; justify-content: space-around; }
+  .hero-stat-divider { display: none; }
+  .hero-body { padding: 56px 24px; }
+  section { padding: 72px 24px; }
+  .quicklinks { grid-template-columns: 1fr 1fr; }
+  .program-grid { grid-template-columns: 1fr; }
+  .request-band { grid-template-columns: 1fr; padding: 72px 24px; gap: 40px; }
+  .news-row { grid-template-columns: 80px 1fr 36px; gap: 14px; }
+  .news-badge { display: none; }
+  .partners-section { padding: 40px 24px; }
+  .footer-grid { grid-template-columns: 1fr; gap: 36px; }
+  footer { padding: 56px 24px 32px; }
+}
+@media (max-width: 520px) {
+  .hero-title { font-size: 32px; }
+  .section-title { font-size: 26px; }
+  .quicklinks { grid-template-columns: 1fr 1fr; }
+  .hero-actions { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+  .news-row { grid-template-columns: 1fr 36px; gap: 12px; }
+  .news-date { display: none; }
+}
+
+/* ── Focus visible ── */
+:focus-visible {
+  outline: 3px solid var(--teal);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Font size slider (accessibility) ── */
+.a11y-bar {
+  position: fixed; bottom: 24px; right: 24px; z-index: 300;
+  background: #fff; border: 2px solid var(--border-md);
+  border-radius: 12px; padding: 14px 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.a11y-label {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.16em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.a11y-btns { display: flex; gap: 6px; }
+.a11y-btn {
+  width: 40px; height: 40px; border-radius: 6px;
+  border: 1.5px solid var(--border-md);
+  background: var(--bg-warm); cursor: pointer;
+  font-family: var(--serif); font-weight: 700; color: var(--ink);
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s;
+  font-size: 16px;
+}
+.a11y-btn:hover { background: var(--teal-bg); border-color: var(--teal); }
+.a11y-btn.active { background: var(--teal); color: #fff; border-color: var(--teal); }
+
+</style>
+</head>
+<body>
+
+<a href="#main" class="skip-link">본문 바로가기</a>
+
+<!-- NAV -->
+<nav role="navigation" aria-label="주요 메뉴">
+  <a href="#" class="logo" aria-label="서울도슨트협회 홈">
+    <span class="logo-main">서울도슨트협회</span>
+    <span class="logo-sub">Seoul Docent Association</span>
+  </a>
+  <ul class="nav-menu" role="list">
+    <li><a href="#">협회 소개</a></li>
+    <li><a href="#">도슨트 소개</a></li>
+    <li><a href="#">교육 프로그램</a></li>
+    <li><a href="#">공지·소식</a></li>
+  </ul>
+  <div class="nav-btns">
+    <a href="#" class="btn btn-ghost" aria-label="도슨트 의뢰하기">도슨트 의뢰</a>
+    <a href="#" class="btn btn-solid" aria-label="교육 프로그램 신청">교육 신청</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<main id="main">
+<section class="hero" aria-labelledby="hero-heading">
+  <div class="hero-body">
+    <div class="hero-badge" role="note">
+      <span>★</span> 사단법인 서울도슨트협회
+    </div>
+    <h1 class="hero-title" id="hero-heading">
+      예술과 사람을 잇는<br><em>전문가 공동체</em>
+    </h1>
+    <p class="hero-desc">
+      서울도슨트협회는 미술관·박물관 현장의 도슨트 전문성을 높이고, 관람객과 예술 사이의 진정한 대화를 이어가는 전문가 단체입니다.
+    </p>
+    <div class="hero-actions">
+      <a href="#" class="btn btn-solid" style="font-size:18px; padding:0 36px; min-height:56px;">교육 프로그램 보기 →</a>
+      <a href="#" class="btn btn-ghost" style="font-size:18px; padding:0 36px; min-height:56px;">협회 소개</a>
+    </div>
+  </div>
+  <div class="hero-visual" aria-hidden="true">
+    <div class="hero-stat-block">
+      <span class="hero-stat-num">340+</span>
+      <span class="hero-stat-label">활동 도슨트</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat-block">
+      <span class="hero-stat-num">80+</span>
+      <span class="hero-stat-label">협력 기관</span>
+    </div>
+    <div class="hero-stat-divider"></div>
+    <div class="hero-stat-block">
+      <span class="hero-stat-num">2019</span>
+      <span class="hero-stat-label">설립 연도</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUICK LINKS -->
+<nav class="quicklinks" aria-label="빠른 메뉴">
+  <a href="#" class="ql-item" aria-label="교육 신청 바로가기">
+    <div class="ql-icon teal">🎓</div>
+    <div class="ql-title">교육 신청</div>
+    <div class="ql-sub">봄·가을 학기 모집 중</div>
+  </a>
+  <a href="#" class="ql-item" aria-label="공지사항 보기">
+    <div class="ql-icon gold">📢</div>
+    <div class="ql-title">공지사항</div>
+    <div class="ql-sub">최신 소식 확인</div>
+  </a>
+  <a href="#" class="ql-item" aria-label="도슨트 의뢰하기">
+    <div class="ql-icon teal">🤝</div>
+    <div class="ql-title">도슨트 의뢰</div>
+    <div class="ql-sub">기관·단체 문의</div>
+  </a>
+  <a href="#" class="ql-item" aria-label="자료실 열기">
+    <div class="ql-icon gold">📁</div>
+    <div class="ql-title">자료실</div>
+    <div class="ql-sub">회원 전용 자료</div>
+  </a>
+</nav>
+
+<!-- PROGRAMS -->
+<section aria-labelledby="prog-heading">
+  <div class="section-eyebrow" aria-hidden="true">Education Program</div>
+  <h2 class="section-title" id="prog-heading">교육 프로그램</h2>
+  <p class="section-lead">체계적인 교육과정으로 도슨트 전문성을 키웁니다. 입문부터 리더 과정까지, 단계별로 역량을 개발합니다.</p>
+  <div class="program-grid">
+    <a href="#" class="program-card reveal" aria-label="SDA 도슨트 교육 자세히 보기">
+      <div class="card-num">과정 01</div>
+      <div class="card-icon-wrap" aria-hidden="true">🎨</div>
+      <div class="card-title">SDA 도슨트 교육</div>
+      <p class="card-desc">미술사, 전시 해설 기법, 소통 방법을 체계적으로 배웁니다. 입문자부터 경험자까지 수준에 맞는 커리큘럼을 제공합니다.</p>
+      <div class="card-cta" aria-hidden="true">자세히 보기</div>
+    </a>
+    <a href="#" class="program-card reveal" style="transition-delay:0.1s" aria-label="도슨트 리더 과정 자세히 보기">
+      <div class="card-num">과정 02</div>
+      <div class="card-icon-wrap" aria-hidden="true">🌟</div>
+      <div class="card-title">도슨트 리더 과정</div>
+      <p class="card-desc">선임 도슨트를 위한 심화 과정입니다. 현장 운영, 후배 지도, 기관 협력 역량을 집중적으로 향상합니다.</p>
+      <div class="card-cta" aria-hidden="true">자세히 보기</div>
+    </a>
+    <a href="#" class="program-card reveal" style="transition-delay:0.2s" aria-label="교육 신청 안내 보기">
+      <div class="card-num">과정 03</div>
+      <div class="card-icon-wrap" aria-hidden="true">📋</div>
+      <div class="card-title">교육 신청 안내</div>
+      <p class="card-desc">봄·가을 정규 과정과 특별 워크숍 일정을 확인하고 온라인으로 신청할 수 있습니다.</p>
+      <div class="card-cta" aria-hidden="true">신청하기</div>
+    </a>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="news-bg" aria-labelledby="news-heading">
+  <div class="news-header">
+    <div>
+      <div class="section-eyebrow" aria-hidden="true">Notice &amp; News</div>
+      <h2 class="section-title" id="news-heading" style="margin-bottom:0">공지 · 협회소식</h2>
+    </div>
+    <a href="#" class="news-more" aria-label="공지·소식 전체 보기">전체 보기 →</a>
+  </div>
+  <ul class="news-list" role="list" aria-label="최신 소식 목록">
+    <li>
+      <a href="#" class="news-row" aria-label="2026.04.30 공지: 서울도슨트협회 26년 4월 주요 활동 안내">
+        <span class="news-date">2026.04.30</span>
+        <span class="news-badge badge-notice" aria-label="공지">공지</span>
+        <span class="news-title">서울도슨트협회 26년 4월 주요 활동 안내</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="news-row" aria-label="2026.04.05 소식: 3월 행사 활동 보고">
+        <span class="news-date">2026.04.05</span>
+        <span class="news-badge badge-news" aria-label="소식">소식</span>
+        <span class="news-title">3월에 진행된 서울도슨트협회 행사 활동 보고</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="news-row" aria-label="2026.04.05 소식: 3월 봄학기 교육 프로그램 진행 현황">
+        <span class="news-date">2026.04.05</span>
+        <span class="news-badge badge-news" aria-label="소식">소식</span>
+        <span class="news-title">3월 봄학기 교육 프로그램 진행 현황</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="news-row" aria-label="2026.03.04 뉴스레터: 2026년 3월호">
+        <span class="news-date">2026.03.04</span>
+        <span class="news-badge badge-letter" aria-label="뉴스레터">뉴스레터</span>
+        <span class="news-title">서울도슨트협회 월간 뉴스레터 2026년 3월호</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+    <li>
+      <a href="#" class="news-row" aria-label="2026.02.08 뉴스레터: 2026년 2월호">
+        <span class="news-date">2026.02.08</span>
+        <span class="news-badge badge-letter" aria-label="뉴스레터">뉴스레터</span>
+        <span class="news-title">서울도슨트협회 월간 뉴스레터 2026년 2월호</span>
+        <span class="news-arrow" aria-hidden="true">→</span>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- DOCENT REQUEST -->
+<div class="request-band" role="region" aria-labelledby="req-heading">
+  <div>
+    <div class="request-eyebrow">For Organizations</div>
+    <h2 class="request-title" id="req-heading">도슨트 의뢰<br>안내</h2>
+    <p class="request-desc">미술관, 박물관, 기업, 학교 등 다양한 기관에 전문 도슨트를 파견합니다. 전시 해설부터 특별 프로그램까지 맞춤 서비스를 제공합니다.</p>
+    <div class="request-chips" role="list" aria-label="서비스 대상">
+      <span class="chip" role="listitem">미술관 · 박물관</span>
+      <span class="chip" role="listitem">기업 문화 행사</span>
+      <span class="chip" role="listitem">학교 연계 프로그램</span>
+      <span class="chip" role="listitem">특별 전시 해설</span>
+    </div>
+    <a href="#" class="btn btn-gold" style="font-size:18px; min-height:56px; padding:0 40px; width:fit-content;">도슨트 의뢰하기 →</a>
+  </div>
+  <div class="request-info" role="complementary" aria-label="연락처 정보">
+    <div class="req-row">
+      <div class="req-icon" aria-hidden="true">🏢</div>
+      <div>
+        <div class="req-text-label">사무실</div>
+        <div class="req-text-val">서울시 종로구 종로 19, 9층 902호<br>(르메이에르 종로타운 1)</div>
+      </div>
+    </div>
+    <div class="req-row">
+      <div class="req-icon" aria-hidden="true">🎓</div>
+      <div>
+        <div class="req-text-label">교육장</div>
+        <div class="req-text-val">서울시 중구 정동길 9<br>프란치스코 교육회관 6층 620호</div>
+      </div>
+    </div>
+    <div class="req-row">
+      <div class="req-icon" aria-hidden="true">📞</div>
+      <div>
+        <div class="req-text-label">전화</div>
+        <div class="req-text-val" style="font-size:22px; font-family:var(--serif); font-weight:700; color:#fff;">010-7631-7766</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PARTNERS -->
+<div class="partners-section" role="region" aria-label="협력 기관">
+  <span class="partners-label">협력 기관</span>
+  <div class="partners-div" aria-hidden="true"></div>
+  <nav class="partner-list" aria-label="협력 기관 링크">
+    <a href="#" class="partner-tag">국립현대미술관</a>
+    <a href="#" class="partner-tag">서울시립미술관</a>
+    <a href="#" class="partner-tag">예술의전당</a>
+    <a href="#" class="partner-tag">김달진미술자료박물관</a>
+    <a href="#" class="partner-tag">한국미술협회</a>
+    <a href="#" class="partner-tag">한국화랑협회</a>
+    <a href="#" class="partner-tag">한국사립미술관협회</a>
+  </nav>
+</div>
+
+</main>
+
+<!-- FOOTER -->
+<footer role="contentinfo">
+  <div class="footer-grid">
+    <div>
+      <div class="footer-brand-name">서울도슨트협회</div>
+      <div class="footer-brand-en">Seoul Docent Association</div>
+      <p class="footer-brand-desc">예술과 사람 사이, 가장 진실한 목소리로 서는 전문가 공동체입니다.</p>
+    </div>
+    <div>
+      <div class="footer-col-head">협회</div>
+      <ul class="footer-links">
+        <li><a href="#">협회 소개</a></li>
+        <li><a href="#">인사말</a></li>
+        <li><a href="#">연혁 및 조직도</a></li>
+        <li><a href="#">오시는 길</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-head">교육·활동</div>
+      <ul class="footer-links">
+        <li><a href="#">교육 프로그램</a></li>
+        <li><a href="#">리더 과정</a></li>
+        <li><a href="#">교육 신청</a></li>
+        <li><a href="#">자료실</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-col-head">연락처</div>
+      <p class="footer-contact-text">
+        서울시 종로구 종로 19<br>9층 902호
+      </p>
+      <div class="footer-tel">010-7631-7766</div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© 2026 서울도슨트협회. All rights reserved.</span>
+    <span class="footer-ssl"><span class="ssl-dot"></span> SSL 보안 연결</span>
+  </div>
+</footer>
+
+<!-- ACCESSIBILITY: Font Size Control -->
+<div class="a11y-bar" role="region" aria-label="글자 크기 조절">
+  <div class="a11y-label">글자 크기</div>
+  <div class="a11y-btns" role="group" aria-label="글자 크기 선택">
+    <button class="a11y-btn" data-size="1.0" aria-label="기본 크기" aria-pressed="true">가</button>
+    <button class="a11y-btn" data-size="1.15" aria-label="크게" aria-pressed="false">가+</button>
+    <button class="a11y-btn" data-size="1.3" aria-label="매우 크게" aria-pressed="false" style="font-size:20px;">가++</button>
+  </div>
+</div>
+
+<script>
+/* ── Font size control ── */
+const sizeBase = 18;
+document.querySelectorAll('.a11y-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const scale = parseFloat(btn.dataset.size);
+    document.body.style.fontSize = (sizeBase * scale) + 'px';
+    document.querySelectorAll('.a11y-btn').forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-pressed', 'false');
+    });
+    btn.classList.add('active');
+    btn.setAttribute('aria-pressed', 'true');
+  });
+});
+
+/* ── Scroll reveal ── */
+const io = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      io.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+/* ── News row keyboard nav ── */
+document.querySelectorAll('.news-row').forEach(row => {
+  row.setAttribute('tabindex', '0');
+  row.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      row.click();
+    }
+  });
+});
+</script>
+</body>
+</html>
